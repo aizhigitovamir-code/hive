@@ -1,0 +1,33 @@
+{
+  "summary": "Create, run, and verify a Python date-printing script.",
+  "tasks": [
+    {
+      "id": "create_script",
+      "title": "Create Python script hello.py",
+      "type": "code",
+      "mode": "agent",
+      "deps": [],
+      "acceptance": "File hello.py exists and contains valid Python code to print today's date."
+    },
+    {
+      "id": "run_script",
+      "title": "Execute hello.py",
+      "type": "fast",
+      "mode": "agent",
+      "deps": [
+        "create_script"
+      ],
+      "acceptance": "Script executes without error and outputs a date string."
+    },
+    {
+      "id": "verify_output",
+      "title": "Verify date output",
+      "type": "analysis",
+      "mode": "llm",
+      "deps": [
+        "run_script"
+      ],
+      "acceptance": "The output string matches the current date."
+    }
+  ]
+}
