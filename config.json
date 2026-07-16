@@ -1,0 +1,23 @@
+{
+  "proxy_base": "http://localhost:4000/v1",
+  "proxy_key": "sk-freestack-local",
+  "brain_backend": "claude-cli",
+  "brain_free_fallback": "free-coder",
+  "tiers": {
+    "reason":   ["free-coder", "free-general", "free-fast"],
+    "code":     ["free-coder", "free-general", "free-fast"],
+    "write":    ["free-general", "free-fast", "free-coder"],
+    "research": ["free-general", "free-fast", "free-coder"],
+    "analysis": ["free-general", "free-coder", "free-fast"],
+    "fast":     ["free-fast", "free-general", "free-coder"],
+    "bigctx":   ["free-bigctx", "free-coder", "free-general"]
+  },
+  "workers": 5,
+  "verify_voters": 3,
+  "max_fix_rounds": 2,
+  "max_waves": 4,
+  "max_agent_steps": 20,
+  "http_timeout": 120,
+  "http_retries": 4,
+  "brain_timeout": 240
+}

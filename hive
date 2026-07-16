@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# HIVE launcher — ensures the free-stack proxy is up, then runs the orchestrator.
+HIVE_DIR="/Users/amiraizhigitov/hive"
+STACK_DIR="/Users/amiraizhigitov/Claude/Projects/OPERATOR - AMIR"
+PY="$HOME/.local/bin/python3.11"
+[ -x "$PY" ] || PY="$(command -v python3)"
+AUTH='Authorization: Bearer sk-freestack-local'
+if ! curl -s -o /dev/null -m 2 http://localhost:4000/v1/models -H "$AUTH"; then
+  echo "▶ starting free-stack proxy…"
+  ( cd "$STACK_DIR" && set -a && source "$HOME/.free-ai-stack/.env.free-stack" && set +a && \
+    nohup "$HOME/.free-ai-stack/.venv/bin/litellm" --config litellm-config.yaml --port 4000 \
+    > "$HOME/.free-ai-stack/proxy.log" 2>&1 & )
+  for i in $(seq 1 15); do sleep 2; curl -s -o /dev/null -m 2 http://localhost:4000/v1/models -H "$AUTH" && break; done
+fi
+exec "$PY" "$HIVE_DIR/hive.py" "$@"
